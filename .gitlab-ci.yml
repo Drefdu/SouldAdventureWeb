@@ -1,0 +1,22 @@
+image: docker:latest
+
+variables:
+  DOCKER_REGISTRY: "docker.io"
+  DOCKER_IMAGE: "drefdu/soul-adventure-web"
+  DOCKER_TAG: "latest"
+
+stages:
+  - build
+
+before_script:
+  - docker login -u drefdu --password 1412Aleinad#PIZZA
+
+build_image:
+  stage: build
+  services:
+    - name: docker:latest
+      alias: docker
+  script:
+    - docker build -t soul-adventure-game . 
+    - docker tag soul-adventure-game:latest drefdu/soul-adventure-web:latest
+    - docker push drefdu/soul-adventure-web:latest
